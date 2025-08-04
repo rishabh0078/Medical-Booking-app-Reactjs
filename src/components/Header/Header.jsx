@@ -96,7 +96,8 @@ const Header = () => {
               ) : (
                 <Link to='/login'>
                   <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
-                    Login to Nirvana360
+                  <span className="hidden md:inline">Login to Nirvana360</span>
+                  <span className="md:hidden">Login</span>
                   </button>
                 </Link>
               )
