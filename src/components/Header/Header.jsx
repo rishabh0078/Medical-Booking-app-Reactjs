@@ -48,7 +48,7 @@ const Header = () => {
   }, [user]);
 
   return (
-    <header className="header flex items-center" ref={headerRef}>
+    <header className="header flex items-center z-[99999]" ref={headerRef}>
       <div className="container">
         <div className="flex items-center justify-between">
           <div>
