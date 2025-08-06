@@ -282,7 +282,7 @@ React.useEffect(() => {
               createPortal(
                 <div
                   ref={dropdownRef}
-                  className="fixed bg-white border border-gray-200 rounded-lg shadow-xl z-[99999] max-h-96 overflow-hidden"
+                  className="fixed bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-96 overflow-hidden"
                   style={{
                     
                     minWidth: "280px",
