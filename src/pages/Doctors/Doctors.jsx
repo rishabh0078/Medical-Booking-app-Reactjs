@@ -6,7 +6,7 @@ import { BASE_URL } from "./../../config";
 import useFetchData from "./../../hooks/useFetchData";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
-import { doctorss } from "./../../assets/data/doctors";
+
 
 const Doctors = () => {
   const [query, setQuery] = useState("");
@@ -436,7 +436,7 @@ React.useEffect(() => {
               {(() => {
                 // Combine all doctors
                 const allDoctors = [
-                  ...(doctorss || []),
+                  
                   ...(approvedDoctors || []),
                 ];
 

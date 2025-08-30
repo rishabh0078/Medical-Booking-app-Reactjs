@@ -10,9 +10,32 @@ const DoctorCard = ({ doctor }) => {
         totalRating,
         photo,
         specialization,
-        totalPatients = 0,
-        hospital = 'N/A'
+        experiences = [],
+        ticketPrice,
+        hospital = 'N/A',
+        address = 'N/A'
     } = doctor;
+
+    // Calculate years of experience
+    const getExperience = () => {
+        if (!experiences?.length) return 'Fresher';
+
+        // Sort experiences by start date
+        const sortedExp = [...experiences].sort((a, b) =>
+            new Date(a.startingDate) - new Date(b.startingDate)
+        );
+
+        const currentYear = new Date().getFullYear();
+        const firstExp = sortedExp[0];
+        const startYear = firstExp.startingDate ? new Date(firstExp.startingDate).getFullYear() : currentYear;
+
+        const hasCurrentJob = sortedExp.some(exp => exp.currentlyWorking);
+        let endYear = hasCurrentJob ? currentYear : (sortedExp[sortedExp.length - 1]?.endingDate ?
+            new Date(sortedExp[sortedExp.length - 1].endingDate).getFullYear() : currentYear);
+
+        const years = endYear - startYear;
+        return years <= 0 ? 'Fresher' : `${years}+ years experience`;
+    };
 
     return (
         <div className="p-3 lg:p-5">
@@ -27,21 +50,23 @@ const DoctorCard = ({ doctor }) => {
                     {specialization}
                 </span>
                 <div className="flex items-center gap-[6px]">
-                    <span className="flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                        <img src={starIcon} alt="Rating Star" /> {avgRating}
-                    </span>
-                    <span className="text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                        ({totalRating})
-                    </span>
+                    <div className="flex items-center">
+                        <span className="bg-[#f3f6fa] text-[#4b5563] text-[11px] leading-[16px] px-2 py-[2px] rounded-full font-medium shadow-sm border border-[#e5e7eb]">
+                            Patient Stories ({totalRating || 0})
+                        </span>
+                    </div>
                 </div>
             </div>
             <div className="mt-[18px] lg:mt-5 flex items-center justify-between">
                 <div>
                     <h3 className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor">
-                        +{totalPatients} patients
+                        {getExperience()}
                     </h3>
                     <p className="text-[14px] leading-6 font-[400] text-textColor">
-                        At {hospital}
+                        {ticketPrice ? `₹${ticketPrice} Consultation fee` : 'Free Consultation'}
+                    </p>
+                    <p className="text-[14px] leading-6 font-[400] font-[500] text-textColor mt-2">
+                        {address}
                     </p>
                 </div>
                 <Link to={`/doctors/${doctor._id}`}

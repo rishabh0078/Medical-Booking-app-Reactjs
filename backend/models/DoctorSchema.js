@@ -37,6 +37,7 @@ const DoctorSchema = new mongoose.Schema({
     default: "pending",
   },
   appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+  address: { type: String },
 });
 
 export default mongoose.model("Doctor", DoctorSchema);

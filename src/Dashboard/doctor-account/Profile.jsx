@@ -19,6 +19,7 @@ const Profile = ({ doctorData }) => {
         timeSlots: [],
         about: "",
         photo: null,
+        address: "",
     });
 
     useEffect(() => {
@@ -35,6 +36,7 @@ const Profile = ({ doctorData }) => {
             timeSlots: doctorData?.timeSlots || [],
             about: doctorData?.about || "",
             photo: doctorData?.photo || null,
+            address: doctorData?.address || "",
         });
     }, [doctorData]);
 
@@ -206,7 +208,20 @@ const Profile = ({ doctorData }) => {
                         onChange={handleInputChange}
                         placeholder="Phone Number"
                         className="form_input"
-                        
+
+                        style={placeholderStyle}
+                    />
+                </div>
+
+                <div className="mb-5">
+                    <p className="form_label">Address*</p>
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        placeholder="Your Address"
+                        className="form_input"
                         style={placeholderStyle}
                     />
                 </div>

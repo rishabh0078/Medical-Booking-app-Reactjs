@@ -15,7 +15,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 const allowedOrigins = [
-  "https://medical-booking-iota.vercel.app"
+  "https://reactjs-doctor-appointment.vercel.app",
+  "http://localhost:5173"
+
 ];
 
 const corsOptions = {

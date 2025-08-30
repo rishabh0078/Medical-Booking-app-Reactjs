@@ -51,11 +51,8 @@ const DoctorDetails = () => {
                   {name}
                 </h3>
                 <div className="flex items-center gap-[6px]">
-                  <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                    <img src={starIcon} alt="" />{averageRating}
-                  </span>
-                  <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                    ({totalRating})
+                  <span className="bg-[#f3f6fa] text-[#4b5563] text-[11px] mt-2 leading-[16px] px-2 py-[2px] rounded-full font-medium shadow-sm border border-[#e5e7eb]">
+                    Patient Stories ({totalRating || 0})
                   </span>
                 </div>
                 <p className="text_para text-[14px] leading-5 md:text-[15px] lg:max-w-[390px]">
@@ -93,7 +90,7 @@ const DoctorDetails = () => {
             </div>
           </div>
           <div>
-            <SidePanel 
+            <SidePanel
               doctorId={doctor._id}
               ticketPrice={ticketPrice}
               timeSlots={timeSlots}
@@ -103,9 +100,9 @@ const DoctorDetails = () => {
       </div>
     </section>
 
-    
 
-      
+
+
   );
 };
 
