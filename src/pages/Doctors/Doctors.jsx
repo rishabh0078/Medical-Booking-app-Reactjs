@@ -7,7 +7,6 @@ import useFetchData from "./../../hooks/useFetchData";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
 
-
 const Doctors = () => {
   const [query, setQuery] = useState("");
   const [debounceQuery, setDebounceQuery] = useState("");
@@ -61,105 +60,109 @@ const Doctors = () => {
   );
 
   const handleCurrentLocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        try {
-          const response = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-          );
-          const data = await response.json();
-          const city = data.city || data.locality || data.principalSubdivision;
-          if (city) {
-            setLocation(city);
-            setLocationSearch("");
-            setShowLocations(false);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const response = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+            );
+            const data = await response.json();
+            const city = data.city || data.locality || data.principalSubdivision;
+            if (city) {
+              setLocation(city);
+              setLocationSearch("");
+              setShowLocations(false);
+            }
+          } catch (error) {
+            console.error('Error getting location:', error);
           }
-        } catch (error) {
-          console.error('Error getting location:', error);
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
         }
-      },
-      (error) => {
-        console.error('Geolocation error:', error);
-      }
-    );
-  }
-};
-
-React.useEffect(() => {
-  function handleClickOutside(event) {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target) &&
-      !locationRef.current.contains(event.target)
-    ) {
-      setShowLocations(false);
+      );
     }
-  }
-
-  function handleKeyDown(event) {
-    if (event.key === 'Escape' && showLocations) {
-      setShowLocations(false);
-    }
-  }
-
-  function updateDropdownPosition() {
-    if (dropdownRef.current && locationRef.current) {
-      const rect = locationRef.current.getBoundingClientRect();
-      dropdownRef.current.style.top = `${rect.bottom + 8}px`;
-      dropdownRef.current.style.left = `${Math.max(16, rect.left)}px`;
-    }
-  }
-
-  if (showLocations) {
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("scroll", updateDropdownPosition); // Add this
-    window.addEventListener("resize", updateDropdownPosition); // Add this
-  }
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-    document.removeEventListener("keydown", handleKeyDown);
-    window.removeEventListener("scroll", updateDropdownPosition); // Add this
-    window.removeEventListener("resize", updateDropdownPosition); // Add this
   };
-}, [showLocations]);
 
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !locationRef.current.contains(event.target)
+      ) {
+        setShowLocations(false);
+      }
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape' && showLocations) {
+        setShowLocations(false);
+      }
+    }
+
+    function updateDropdownPosition() {
+      if (dropdownRef.current && locationRef.current) {
+        const rect = locationRef.current.getBoundingClientRect();
+        dropdownRef.current.style.top = `${rect.bottom + 8}px`;
+        dropdownRef.current.style.left = `${Math.max(16, rect.left)}px`;
+      }
+    }
+
+    if (showLocations) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("scroll", updateDropdownPosition); // Add this
+      window.addEventListener("resize", updateDropdownPosition); // Add this
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("scroll", updateDropdownPosition); // Add this
+      window.removeEventListener("resize", updateDropdownPosition); // Add this
+    };
+  }, [showLocations]);
 
   return (
     <>
-      <section className="relative py-12 md:py-24 px-4 bg-gradient-to-r from-white to-orange-100 overflow-hidden">
+      <section className="relative py-14 md:py-20 px-4 bg-gradient-to-r from-[#e0f7fa] via-white via-60% to-[#fff7e6] overflow-hidden flex flex-col items-center justify-center">
         {/* Decorative SVG Blob */}
         <svg
-          className="absolute top-0 left-0 w-48 h-48 md:w-96 md:h-96 opacity-20 -z-10"
+          className="absolute top-0 left-0 w-40 h-40 md:w-72 md:h-72 opacity-10 -z-10"
           viewBox="0 0 400 400"
           fill="none"
         >
           <circle cx="200" cy="200" r="200" fill="#7DD3FC" />
         </svg>
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-3xl w-full mx-auto flex flex-col items-center justify-center">
           {/* Hero Content */}
-          <div className="text-center mb-8 md:mb-12">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 md:mb-6 drop-shadow-sm">
-              Your home for health
-            </h1>
-            <div className="text-lg md:text-2xl font-semibold text-blue-700 text-center pl-50 md:mb-8">
+          <div className="text-center mb-8 md:mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold shadow-sm mb-4 animate-fade-in">
+              <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
               Find and Book
             </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 tracking-tight">
+              Your home for health
+            </h1>
+            <p className="text-base md:text-lg text-gray-600 max-w-lg mx-auto font-normal leading-relaxed">
+              <span className="block">Discover top doctors, clinics, and hospitals near you.</span>
+              <span className="block mt-1 text-blue-600 font-medium">Book appointments with ease and confidence.</span>
+            </p>
           </div>
 
           {/* Search Form */}
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
-            <div className="flex flex-col sm:flex-row bg-white/95 border border-blue-100 rounded-xl shadow-xl backdrop-blur-sm overflow-visible relative">
+          <form onSubmit={handleSearch} className="w-full max-w-2xl">
+            <div className="flex flex-col sm:flex-row bg-white border border-blue-100 rounded-2xl shadow-lg backdrop-blur-sm overflow-visible relative transition-all duration-300">
               {/* Location Input */}
               <div
-                className="relative flex-1 flex items-center cursor-pointer border-b sm:border-b-0 sm:border-r border-blue-100"
+                className="relative flex-1 flex items-center cursor-pointer border-b sm:border-b-0 sm:border-r border-blue-100 min-w-0 group"
                 ref={locationRef}
                 onClick={() => setShowLocations(true)}
               >
-                <span className="absolute left-4 text-blue-400">
+                <span className="absolute left-5 text-blue-300 group-hover:text-blue-500 transition-colors">
                   <svg
                     className="w-5 h-5"
                     fill="none"
@@ -246,9 +249,9 @@ React.useEffect(() => {
 
               {/* Keyword Input */}
               <div className="relative flex-1 flex items-center">
-                <span className="absolute left-4 text-blue-400">
+                <span className="absolute left-5 text-blue-300 group-hover:text-blue-500 transition-colors">
                   <svg
-                    className="w-5 h-5"
+                    className="w-6 h-6"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -271,7 +274,7 @@ React.useEffect(() => {
               {/* Button */}
               <button
                 type="submit"
-                className="bg-teal-500 hover:bg-teal-600 transition text-white font-bold px-6 py-4 sm:py-3 rounded-b-xl sm:rounded-b-none sm:rounded-r-xl w-full sm:w-auto"
+                className="bg-teal-500 hover:bg-teal-600 transition text-white font-bold px-6 py-4 sm:py-3 rounded-b-2xl sm:rounded-b-none sm:rounded-r-2xl w-full sm:w-auto"
               >
                 Search
               </button>
@@ -282,9 +285,8 @@ React.useEffect(() => {
               createPortal(
                 <div
                   ref={dropdownRef}
-                  className="fixed bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-96 overflow-hidden"
+                  className="fixed bg-white border border-gray-200 rounded-2xl shadow-lg z-[9999] max-h-96 overflow-hidden"
                   style={{
-                    
                     minWidth: "280px",
                     maxWidth: "90vw",
                     top: locationRef.current
@@ -400,29 +402,6 @@ React.useEffect(() => {
                 document.body
               )}
           </form>
-
-          {/* Popular Searches */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm">
-            <span className="text-blue-700 font-medium">Popular searches:</span>
-            <a
-              href="#"
-              className="bg-blue-100 text-teal-700 font-semibold rounded px-3 py-1 hover:bg-teal-200 transition"
-            >
-              Dermatologist
-            </a>
-            <a
-              href="#"
-              className="bg-blue-100 text-teal-700 font-semibold rounded px-3 py-1 hover:bg-teal-200 transition"
-            >
-              Pediatrician
-            </a>
-            <a
-              href="#"
-              className="bg-blue-100 text-teal-700 font-semibold rounded px-3 py-1 hover:bg-teal-200 transition"
-            >
-              Gynecologist
-            </a>
-          </div>
         </div>
       </section>
 
@@ -436,7 +415,7 @@ React.useEffect(() => {
               {(() => {
                 // Combine all doctors
                 const allDoctors = [
-                  
+                  // ...doctors,
                   ...(approvedDoctors || []),
                 ];
 
