@@ -175,9 +175,9 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg border border-gray-100 rounded-2xl overflow-hidden">
+    <div className="bg-white shadow-xl border border-gray-100 rounded-2xl overflow-hidden w-full max-w-md mx-auto sm:max-w-full sm:rounded-none p-2 sm:p-0">
       {/* Header Section */}
-      <div className="px-6 py-5 border-b border-gray-100">
+      <div className="px-3 py-4 sm:px-6 sm:py-5 border-b border-gray-100">
         <div>
           <p className="text-sm text-gray-600 font-medium">Consultation Fee</p>
           <div className="flex items-baseline gap-1">
@@ -189,13 +189,13 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
         </div>
       </div>
 
-      <div className="p-6 space-y-6">
+      <div className="p-3 sm:p-6 space-y-6">
         {/* Date Selection Calendar */}
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Select Date
           </h3>
-          <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-hide">
+          <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0">
             {dates.map((date, index) => {
               const { day, month, weekday } = formatDate(date);
               const isSelected =
@@ -207,11 +207,11 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
                 <button
                   key={index}
                   onClick={() => setSelectedDate(date)}
-                  className={`flex flex-col items-center justify-center flex-shrink-0 w-16 h-20 rounded-lg transition-all duration-200 ${isSelected
-                      ? "bg-blue-600 text-white"
+                  className={`flex flex-col items-center justify-center flex-shrink-0 w-16 h-20 rounded-xl shadow-sm transition-all duration-200 border-2 ${isSelected
+                      ? "bg-blue-600 text-white border-blue-600"
                       : today
-                        ? "bg-blue-50 border border-blue-200 text-blue-600"
-                        : "bg-white border border-gray-200 text-gray-700 hover:border-blue-300"
+                        ? "bg-blue-50 border border-blue-300 text-blue-600"
+                        : "bg-white border border-gray-200 text-gray-700 hover:border-blue-400"
                     }`}
                 >
                   <span
@@ -263,7 +263,7 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
                             6 AM - 12 PM
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {/* CURRENT MORNING SLOT BUTTONS ARE HERE */}
                           {categorizedSlots.morning.map((slot, index) => (
                             <button
@@ -294,7 +294,7 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
                             12 PM - 5 PM
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {categorizedSlots.afternoon.map((slot, index) => (
                             <button
                               key={`afternoon-${index}`}
@@ -324,7 +324,7 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
                             5 PM - 10 PM
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {categorizedSlots.evening.map((slot, index) => (
                             <button
                               key={`evening-${index}`}
@@ -361,7 +361,7 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
       </div>
 
       {/* Book Appointment Button */}
-      <div className="p-6 pt-0">
+      <div className="p-4 pt-0 sm:p-6 sm:pt-0">
         <button
           onClick={bookingHandler}
           disabled={!selectedDate || !selectedSlot}
